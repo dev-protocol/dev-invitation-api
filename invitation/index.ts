@@ -39,8 +39,8 @@ const invite: AzureFunction = async (
 		address,
 	}
 
-	const apiKey = process.env.AIRTABLE_API_KEY as string
-	const endpoint = process.env.AIRTABLE_ENDPOINT as string
+	const apiKey = process.env.AIRTABLE_API_KEY || ''
+	const endpoint = process.env.AIRTABLE_ENDPOINT || ''
 	const success = await createData(apiKey, endpoint, fields)
 	const status = success ? 200 : 400
 	return {
