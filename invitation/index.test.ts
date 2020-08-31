@@ -52,8 +52,6 @@ test.serial('Returns a success response', async (t) => {
 				records: {
 					id: random(),
 					fields: {
-						message,
-						signature,
 						market,
 						asset,
 						email,

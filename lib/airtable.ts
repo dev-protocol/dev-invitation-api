@@ -28,8 +28,6 @@ export const createData = async (
 }
 
 export type AirTableField = {
-	readonly message: string
-	readonly signature: string
 	readonly market: string
 	readonly asset: string
 	readonly email: string

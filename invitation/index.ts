@@ -22,8 +22,6 @@ const invite: AzureFunction = async (
 		message && signature ? recover(message, signature) : undefined
 	const address = recoverAccount ? recoverAccount : ''
 	const fields: AirTableField = {
-		message,
-		signature,
 		market,
 		asset,
 		email,
