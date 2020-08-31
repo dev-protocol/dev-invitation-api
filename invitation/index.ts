@@ -6,18 +6,10 @@ import { createData, AirTableField } from '../lib/airtable'
 // eslint-disable-next-line functional/no-expression-statement
 config()
 
-type Response = {
-	readonly status: number
-	readonly body: string | Record<string, unknown>
-	readonly headers?: {
-		readonly [key: string]: string
-	}
-}
-
 const invite: AzureFunction = async (
-	context: Context,
+	_: Context,
 	req: HttpRequest
-): Promise<Response> => {
+): Promise<ReturnTypeOfAzureFunctions> => {
 	const {
 		message = '',
 		signature = '',
