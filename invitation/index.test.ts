@@ -94,3 +94,24 @@ test.serial(
 		t.is(res?.body?.success, false)
 	}
 )
+
+test.serial(
+	'The response code is 400 when message or signature is empty',
+	async (t) => {
+		const emptyMessage = ''
+		const emptySignature = ''
+		const res1 = await invite(
+			context,
+			createReq(emptyMessage, signature, market, asset, email, discord)
+		)
+		t.is(res1?.status, 400)
+		t.is(res1?.body?.success, false)
+
+		const res2 = await invite(
+			context,
+			createReq(message, emptySignature, market, asset, email, discord)
+		)
+		t.is(res2?.status, 400)
+		t.is(res2?.body?.success, false)
+	}
+)
