@@ -18,8 +18,16 @@ const invite: AzureFunction = async (
 		email = '',
 		discord = '',
 	} = req.body
-	const recoverAccount =
-		message && signature ? recover(message, signature) : undefined
+	// eslint-disable-next-line functional/no-conditional-statement
+	if (message === '' || signature === '') {
+		return {
+			status: 400,
+			body: {
+				success: false,
+			},
+		}
+	}
+	const recoverAccount = recover(message, signature)
 	const address = recoverAccount ? recoverAccount : ''
 	const fields: AirTableField = {
 		market,
