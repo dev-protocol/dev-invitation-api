@@ -20,7 +20,12 @@ const createReq = (
 	market?: string,
 	asset?: string,
 	email?: string,
-	discord?: string
+	discord?: string,
+	name?: string,
+	url?: string,
+	ask?: string,
+	useCase?: string,
+	role?: string
 ): HttpRequest =>
 	(({
 		body: {
@@ -30,6 +35,11 @@ const createReq = (
 			asset,
 			email,
 			discord,
+			name,
+			url,
+			ask,
+			useCase,
+			role,
 		},
 	} as unknown) as HttpRequest)
 
@@ -40,6 +50,11 @@ const market = random()
 const asset = random()
 const email = random()
 const discord = random()
+const name = random()
+const url = random()
+const ask = random()
+const useCase = random()
+const role = random()
 const address = fakeRecover(message, signature) as string
 
 test.serial('Returns a success response', async (t) => {
@@ -57,6 +72,11 @@ test.serial('Returns a success response', async (t) => {
 						email,
 						discord,
 						address,
+						name,
+						role,
+						url,
+						useCase,
+						ask,
 					},
 					createdTime: new Date().toString(),
 				},
@@ -66,7 +86,19 @@ test.serial('Returns a success response', async (t) => {
 	]
 	const res = await invite(
 		context,
-		createReq(message, signature, market, asset, email, discord)
+		createReq(
+			message,
+			signature,
+			market,
+			asset,
+			email,
+			discord,
+			name,
+			url,
+			ask,
+			useCase,
+			role
+		)
 	)
 	stubs.map((s) => s.restore())
 	t.is(res?.status, 200)

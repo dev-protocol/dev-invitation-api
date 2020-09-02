@@ -33,6 +33,11 @@ export type AirTableField = {
 	readonly email: string
 	readonly discord: string
 	readonly address: string
+	readonly name: string
+	readonly role: string
+	readonly useCase: string
+	readonly url: string
+	readonly ask: string
 }
 
 export type AirTableRecord = {

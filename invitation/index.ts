@@ -13,8 +13,13 @@ const invite: AzureFunction = async (
 	const {
 		message = '',
 		signature = '',
-		market = '',
+		name = '',
+		url = '',
+		useCase = '',
+		ask = '',
 		asset = '',
+		role = '',
+		market = '',
 		email = '',
 		discord = '',
 	} = req.body
@@ -32,6 +37,11 @@ const invite: AzureFunction = async (
 	const fields: AirTableField = {
 		market,
 		asset,
+		name,
+		role,
+		useCase,
+		url,
+		ask,
 		email,
 		discord,
 		address,
