@@ -23,6 +23,8 @@ const invite: AzureFunction = async (
 		email = '',
 		discord = '',
 	} = req.body
+	// eslint-disable-next-line functional/no-expression-statement
+	console.log('req.body', JSON.stringify(req.body))
 	// eslint-disable-next-line functional/no-conditional-statement
 	if (message === '' || signature === '') {
 		return {
