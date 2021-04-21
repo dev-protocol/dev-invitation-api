@@ -24,8 +24,6 @@ export const createData = async (
 	const res = await airTableFetcher({
 		records: [{ fields: fields }],
 	})
-	// eslint-disable-next-line functional/no-expression-statement
-	console.log('res', res, JSON.stringify(res))
 	return res instanceof Error ? false : true
 }
 
