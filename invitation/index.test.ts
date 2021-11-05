@@ -20,7 +20,8 @@ const createReq = (
 	market?: string,
 	asset?: string,
 	email?: string,
-	discord?: string
+	discord?: string,
+	newsletter?: boolean
 ): HttpRequest =>
 	(({
 		body: {
@@ -30,6 +31,7 @@ const createReq = (
 			asset,
 			email,
 			discord,
+			newsletter,
 		},
 	} as unknown) as HttpRequest)
 
@@ -41,6 +43,7 @@ const asset = random()
 const email = random()
 const discord = random()
 const address = fakeRecover(message, signature) as string
+const newsletter = Math.random() < 0.5
 
 test.serial('Returns a success response', async (t) => {
 	const stubs = [
@@ -59,6 +62,7 @@ test.serial('Returns a success response', async (t) => {
 						email,
 						discord,
 						address,
+						'Subscribe Newsletter': newsletter === true ? 'Yes' : '',
 					},
 					createdTime: new Date().toString(),
 				},
@@ -68,7 +72,7 @@ test.serial('Returns a success response', async (t) => {
 	]
 	const res = await invite(
 		context,
-		createReq(message, signature, market, asset, email, discord)
+		createReq(message, signature, market, asset, email, discord, newsletter)
 	)
 	stubs.map((s) => s.restore())
 	t.is(res?.status, 200)
