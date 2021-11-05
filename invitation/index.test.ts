@@ -21,6 +21,11 @@ const createReq = (
 	asset?: string,
 	email?: string,
 	discord?: string,
+	name?: string,
+	url?: string,
+	ask?: string,
+	useCase?: string,
+	role?: string,
 	newsletter?: boolean
 ): HttpRequest =>
 	(({
@@ -31,6 +36,11 @@ const createReq = (
 			asset,
 			email,
 			discord,
+			name,
+			url,
+			ask,
+			useCase,
+			role,
 			newsletter,
 		},
 	} as unknown) as HttpRequest)
@@ -42,6 +52,11 @@ const market = random()
 const asset = random()
 const email = random()
 const discord = random()
+const name = random()
+const url = random()
+const ask = random()
+const useCase = random()
+const role = random()
 const address = fakeRecover(message, signature) as string
 const newsletter = Math.random() < 0.5
 
@@ -55,13 +70,16 @@ test.serial('Returns a success response', async (t) => {
 				records: {
 					id: random(),
 					fields: {
-						message,
-						signature,
 						market,
 						asset,
 						email,
 						discord,
 						address,
+						name,
+						role,
+						url,
+						useCase,
+						ask,
 						'Subscribe Newsletter': newsletter === true ? 'Yes' : '',
 					},
 					createdTime: new Date().toString(),
@@ -72,7 +90,20 @@ test.serial('Returns a success response', async (t) => {
 	]
 	const res = await invite(
 		context,
-		createReq(message, signature, market, asset, email, discord, newsletter)
+		createReq(
+			message,
+			signature,
+			market,
+			asset,
+			email,
+			discord,
+			name,
+			url,
+			ask,
+			useCase,
+			role,
+			newsletter
+		)
 	)
 	stubs.map((s) => s.restore())
 	t.is(res?.status, 200)
@@ -98,5 +129,26 @@ test.serial(
 		stubs.map((s) => s.restore())
 		t.is(res?.status, 400)
 		t.is(res?.body?.success, false)
+	}
+)
+
+test.serial(
+	'The response code is 400 when message or signature is empty',
+	async (t) => {
+		const emptyMessage = ''
+		const emptySignature = ''
+		const res1 = await invite(
+			context,
+			createReq(emptyMessage, signature, market, asset, email, discord)
+		)
+		t.is(res1?.status, 400)
+		t.is(res1?.body?.success, false)
+
+		const res2 = await invite(
+			context,
+			createReq(message, emptySignature, market, asset, email, discord)
+		)
+		t.is(res2?.status, 400)
+		t.is(res2?.body?.success, false)
 	}
 )

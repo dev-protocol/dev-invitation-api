@@ -6,35 +6,43 @@ import { createData, AirTableField } from '../lib/airtable'
 // eslint-disable-next-line functional/no-expression-statement
 config()
 
-type Response = {
-	readonly status: number
-	readonly body: string | Record<string, unknown>
-	readonly headers?: {
-		readonly [key: string]: string
-	}
-}
-
 const invite: AzureFunction = async (
-	context: Context,
+	_: Context,
 	req: HttpRequest
-): Promise<Response> => {
+): Promise<ReturnTypeOfAzureFunctions> => {
 	const {
 		message = '',
 		signature = '',
-		market = '',
+		name = '',
+		url = '',
+		useCase = '',
+		ask = '',
 		asset = '',
+		role = '',
+		market = '',
 		email = '',
 		discord = '',
 		newsletter = false,
 	} = req.body
-	const recoverAccount =
-		message && signature ? recover(message, signature) : undefined
+	// eslint-disable-next-line functional/no-conditional-statement
+	if (message === '' || signature === '') {
+		return {
+			status: 400,
+			body: {
+				success: false,
+			},
+		}
+	}
+	const recoverAccount = recover(message, signature)
 	const address = recoverAccount ? recoverAccount : ''
 	const fields: AirTableField = {
-		message,
-		signature,
 		market,
 		asset,
+		name,
+		role,
+		useCase,
+		url,
+		ask,
 		email,
 		discord,
 		address,
