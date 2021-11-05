@@ -49,10 +49,8 @@ const invite: AzureFunction = async (
 		'Subscribe Newsletter': newsletter === true ? 'Yes' : '',
 	}
 
-	const apiKey = process.env.AIRTABLE_API_KEY || 'keybGji5k5MQkDFj2'
-	const endpoint =
-		process.env.AIRTABLE_ENDPOINT ||
-		'https://api.airtable.com/v0/appxkQb2DEBONHlJF/V'
+	const apiKey = process.env.AIRTABLE_API_KEY || ''
+	const endpoint = process.env.AIRTABLE_ENDPOINT || ''
 	const success = await createData(apiKey, endpoint, fields)
 	const status = success ? 200 : 400
 	return {
