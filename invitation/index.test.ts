@@ -25,7 +25,8 @@ const createReq = (
 	url?: string,
 	ask?: string,
 	useCase?: string,
-	role?: string
+	role?: string,
+	newsletter?: boolean
 ): HttpRequest =>
 	(({
 		body: {
@@ -40,6 +41,7 @@ const createReq = (
 			ask,
 			useCase,
 			role,
+			newsletter,
 		},
 	} as unknown) as HttpRequest)
 
@@ -56,6 +58,7 @@ const ask = random()
 const useCase = random()
 const role = random()
 const address = fakeRecover(message, signature) as string
+const newsletter = Math.random() < 0.5
 
 test.serial('Returns a success response', async (t) => {
 	const stubs = [
@@ -77,6 +80,7 @@ test.serial('Returns a success response', async (t) => {
 						url,
 						useCase,
 						ask,
+						'Subscribe Newsletter': newsletter === true ? 'Yes' : '',
 					},
 					createdTime: new Date().toString(),
 				},
@@ -97,7 +101,8 @@ test.serial('Returns a success response', async (t) => {
 			url,
 			ask,
 			useCase,
-			role
+			role,
+			newsletter
 		)
 	)
 	stubs.map((s) => s.restore())

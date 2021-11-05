@@ -22,6 +22,7 @@ const invite: AzureFunction = async (
 		market = '',
 		email = '',
 		discord = '',
+		newsletter = false,
 	} = req.body
 	// eslint-disable-next-line functional/no-conditional-statement
 	if (message === '' || signature === '') {
@@ -45,6 +46,7 @@ const invite: AzureFunction = async (
 		email,
 		discord,
 		address,
+		'Subscribe Newsletter': newsletter === true ? 'Yes' : '',
 	}
 
 	const apiKey = process.env.AIRTABLE_API_KEY || ''

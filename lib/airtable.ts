@@ -38,6 +38,7 @@ export type AirTableField = {
 	readonly useCase: string
 	readonly url: string
 	readonly ask: string
+	readonly 'Subscribe Newsletter': string
 }
 
 export type AirTableRecord = {
